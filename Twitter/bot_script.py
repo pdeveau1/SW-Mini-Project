@@ -1,6 +1,7 @@
 import check_bot
 
-bot = check_bot.Bot('@clayadavis')
+username = input('Enter a username to check: ')
+bot = check_bot.Bot('@' + username)
 print(bot.get_account())
 print(bot.get_score())
 print(bot.get_bot())

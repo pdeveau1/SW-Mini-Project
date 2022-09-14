@@ -7,6 +7,7 @@ class Bot:
         self.result = {}
         self.score = {}
         self.is_bot = False
+        self.id = 0
 
     #Get the account information of the user
     def get_account(self):
@@ -62,3 +63,7 @@ class Bot:
             self.is_bot = False
 
         return self.is_bot
+
+    def get_id(self):
+        self.id = self.result['user']['user_data']['id_str']
+        return self.id
