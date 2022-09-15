@@ -1,47 +1,15 @@
 from decouple import config
 from botometer import Botometer
+from user import User
 
-class Bot:
-    def __init__(self,account):
-        self.account = account
-        self.result = {}
+class Bot(User):
+    def __init__(self, account):
         self.score = {}
         self.is_bot = False
-        self.id = 0
+        
+        User.__init__(self, account)
 
-    #Get the account information of the user
-    def get_account(self):
-        rapidapi_key = config('rapidapi_key',default='')
-        twitter_app_auth = {
-                    'consumer_key': config('consumer_key',default=""),
-                    'consumer_secret': config('consumer_secret',default=""),
-                    'access_token': config('access_token',default=""),
-                    'access_token_secret': config('access_token_secret',default="")
-                    }
-
-        botometer = Botometer(wait_on_ratelimit=True,
-                                rapidapi_key=rapidapi_key,
-                                **twitter_app_auth)
-
-        self.result = botometer.check_account(self.account)
-        return(self.result)
-    """
-    def check_accounts(self):
-        rapidapi_key = config('rapidapi_key',default='')
-        twitter_app_auth = {
-                    'consumer_key': config('consumer_key',default=""),
-                    'consumer_secret': config('consumer_secret',default=""),
-                    'access_token': config('access_token',default=""),
-                    'access_token_secret': config('access_token_secret',default="")
-                    }
-
-        botometer = Botometer(wait_on_ratelimit=True,
-                                rapidapi_key=rapidapi_key,
-                                **twitter_app_auth)
-
-        for screen_name, result in bom.check_accounts_in(self.accounts):
-            self.results[screen_name] = botometer.check_account(screen_name)
-    """
+        self.get_account()
 
     #Get the english and universal bot score of the user
     def get_score(self):
@@ -63,7 +31,3 @@ class Bot:
             self.is_bot = False
 
         return self.is_bot
-
-    def get_id(self):
-        self.id = self.result['user']['user_data']['id_str']
-        return self.id
