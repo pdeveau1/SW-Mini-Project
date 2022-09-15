@@ -1,13 +1,12 @@
 import json
-import check_bot
-import check_topics
+import user
 
 username = input('Enter a username to check: ')
-bot = check_bot.Bot('@' + username)
+bot = user.User('@' + username)
 print(bot.get_account())
 print(bot.get_score())
 print(bot.get_bot())
-
-topics = check_topics.Topics('@' + username)
-topics.get_timeline()
-print(json.dumps(topics.timeline, indent=4, sort_keys=True))
+print(bot.get_id())
+bot.get_timeline()
+print(json.dumps(bot.timeline, indent=4, sort_keys=True))
+bot.get_sentiment()
