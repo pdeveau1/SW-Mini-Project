@@ -16,6 +16,7 @@ class User:
         self.is_bot = False
         self.timeline = None
         self.sentiments = None
+        self.sentiment = None
 
     #Get the account information of the user
     def get_account(self):
@@ -51,6 +52,8 @@ class User:
     def get_bot(self):
         if(self.result is None):
             self.get_account()
+        if(self.score is None):
+            self.get_score()
         #get majority language to determine what score to use for bot check
         if self.result['user']['majority_lang'] == 'en':
             score = self.score['english']
@@ -94,7 +97,6 @@ class User:
 
     def connect_to_endpoint(self,url, params):
         response = requests.request("GET", url, auth=self.bearer_oauth, params=params)
-        print(response.status_code)
         if response.status_code != 200:
             raise Exception(
                 "Request returned an error: {} {}".format(
@@ -140,3 +142,22 @@ class User:
         #print("Text: {}".format(text))
         #print("Sentiment: {}, {}".format(sentiment.score, sentiment.magnitude))
         
+    def calc_sentiment(self):
+        if (self.sentiments is None):
+            self.get_sentiment()
+
+        score = 0
+        for items in self.sentiments:
+            #Use magnitude for weight of sentiment of each tweet
+            score += items['sentiment']['score'] * items['sentiment']['magnitude']
+        
+        #score ranges from -inf to +inf once use magnitude as weight
+        #negative score is a negative sentiment and positive score is positive sentiment
+        if(score > 0):
+            self.sentiment = 'Positive'
+        elif(score < 0):
+            self.sentiment = 'Negative'
+        else:
+            self.sentiment = 'Neutral'
+        
+        return self.sentiment
