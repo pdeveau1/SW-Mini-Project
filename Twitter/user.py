@@ -17,6 +17,7 @@ class User:
         self.timeline = None
         self.sentiments = None
         self.sentiment = None
+        self.topics = None
 
     #Get the account information of the user
     def get_account(self):
@@ -162,13 +163,17 @@ class User:
         
         return self.sentiment
 
-    def sample_analyze_entities(self,text_content):
+
+    def sample_analyze_entities(self):
         """
         Analyzing Entities in a String
 
         Args:
         text_content The text content to analyze
         """
+
+        if(self.timeline is None):
+            self.get_timeline()
 
         client = language_v1.LanguageServiceClient()
 
@@ -177,56 +182,63 @@ class User:
         # Available types: PLAIN_TEXT, HTML
         type_ = language_v1.Document.Type.PLAIN_TEXT
 
-        # Optional. If not specified, the language is automatically detected.
-        # For list of supported languages:
-        # https://cloud.google.com/natural-language/docs/languages
-        language = "en"
-        document = {"content": text_content, "type_": type_, "language": language}
+        for item in self.timeline['data']:
+            print(u'Text: {}'.format(item['text']))
+            # Optional. If not specified, the language is automatically detected.
+            # For list of supported languages:
+            # https://cloud.google.com/natural-language/docs/languages
+            document = {"content": item['text'], "type_": type_}
 
-        # Available values: NONE, UTF8, UTF16, UTF32
-        encoding_type = language_v1.EncodingType.UTF8
+            # Available values: NONE, UTF8, UTF16, UTF32
+            encoding_type = language_v1.EncodingType.UTF8
 
-        response = client.analyze_entities(request = {'document': document, 'encoding_type': encoding_type})
+            response = client.analyze_entities(request = {'document': document, 'encoding_type': encoding_type})
 
-        # Loop through entitites returned from the API
-        for entity in response.entities:
-            print(u"Representative name for the entity: {}".format(entity.name))
+            # Loop through entitites returned from the API
+            for entity in response.entities:
+                print(u"Representative name for the entity: {}".format(entity.name))
 
-            # Get entity type, e.g. PERSON, LOCATION, ADDRESS, NUMBER, et al
-            print(u"Entity type: {}".format(language_v1.Entity.Type(entity.type_).name))
+                # Get entity type, e.g. PERSON, LOCATION, ADDRESS, NUMBER, et al
+                print(u"Entity type: {}".format(language_v1.Entity.Type(entity.type_).name))
 
-            # Get the salience score associated with the entity in the [0, 1.0] range
-            print(u"Salience score: {}".format(entity.salience))
+                # Get the salience score associated with the entity in the [0, 1.0] range
+                print(u"Salience score: {}".format(entity.salience))
 
-            # Loop over the metadata associated with entity. For many known entities,
-            # the metadata is a Wikipedia URL (wikipedia_url) and Knowledge Graph MID (mid).
-            # Some entity types may have additional metadata, e.g. ADDRESS entities
-            # may have metadata for the address street_name, postal_code, et al.
-            for metadata_name, metadata_value in entity.metadata.items():
-                print(u"{}: {}".format(metadata_name, metadata_value))
+                # Loop over the metadata associated with entity. For many known entities,
+                # the metadata is a Wikipedia URL (wikipedia_url) and Knowledge Graph MID (mid).
+                # Some entity types may have additional metadata, e.g. ADDRESS entities
+                # may have metadata for the address street_name, postal_code, et al.
+                for metadata_name, metadata_value in entity.metadata.items():
+                    print(u"{}: {}".format(metadata_name, metadata_value))
 
-            # Loop over the mentions of this entity in the input document.
-            # The API currently supports proper noun mentions.
-            for mention in entity.mentions:
-                print(u"Mention text: {}".format(mention.text.content))
+                # Loop over the mentions of this entity in the input document.
+                # The API currently supports proper noun mentions.
+                for mention in entity.mentions:
+                    print(u"Mention text: {}".format(mention.text.content))
 
-                # Get the mention type, e.g. PROPER for proper noun
-                print(
-                    u"Mention type: {}".format(language_v1.EntityMention.Type(mention.type_).name)
-                )
-
+                    # Get the mention type, e.g. PROPER for proper noun
+                    print(
+                        u"Mention type: {}".format(language_v1.EntityMention.Type(mention.type_).name)
+                    )
+            print('\n\n')
         # Get the language of the text, which will be the same as
         # the language specified in the request or, if not specified,
         # the automatically-detected language.
         print(u"Language of the text: {}".format(response.language))
 
-    def sample_classify_text(self,text_content):
-        """
-        Classifying Content in a String
 
-        Args:
-        text_content The text content to analyze. Must include at least 20 words.
-        """
+    """
+    def sample_classify_text(self):
+        if(self.timeline is None):
+            self.get_timeline()
+    """
+        #Classifying Content in a String
+
+        #Args:
+        #text_content The text content to analyze. Must include at least 20 words.
+    """
+
+        topics = []
 
         client = language_v1.LanguageServiceClient()
 
@@ -239,16 +251,22 @@ class User:
         # For list of supported languages:
         # https://cloud.google.com/natural-language/docs/languages
         language = "en"
-        document = {"content": text_content, "type_": type_, "language": language}
+        for item in self.timeline['data']:
+            print(item['text'])
+            document = {"content": item['text'], "type_": type_, "language": language}
 
-        response = client.classify_text(request = {'document': document})
-        # Loop through classified categories returned from the API
-        for category in response.categories:
-            # Get the name of the category representing the document.
-            # See the predefined taxonomy of categories:
-            # https://cloud.google.com/natural-language/docs/categories
-            print(u"Category name: {}".format(category.name))
-            # Get the confidence. Number representing how certain the classifier
-            # is that this category represents the provided text.
-            print(u"Confidence: {}".format(category.confidence))
+            response = client.classify_text(request = {'document': document})
+            # Loop through classified categories returned from the API
+            for category in response.categories:
+                topics.append(category.name)
+                # Get the name of the category representing the document.
+                # See the predefined taxonomy of categories:
+                # https://cloud.google.com/natural-language/docs/categories
+                print(u"Category name: {}".format(category.name))
+                # Get the confidence. Number representing how certain the classifier
+                # is that this category represents the provided text.
+                print(u"Confidence: {}".format(category.confidence))
 
+        self.topics = topics
+        return self.topics
+    """
