@@ -1,11 +1,9 @@
-from django.urls import include, path
-from rest_framework import routers
-from . import views
+from django.urls import re_path as url
+from django.urls import path, include
+from .views import (
+    TwitterUserAPIView,
+)
 
-router = routers.DefaultRouter()
-router.register(r'twitter_users', views.TwitterUserViewSet)
-
-urlpatters = [
-    path('',include(router.urls)),
-    path('api-auth/',include('rest_framework.urls', namespace='rest_framework'))
+urlpatterns = [
+    path('user/',TwitterUserAPIView.as_view())
 ]
