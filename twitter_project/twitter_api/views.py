@@ -9,19 +9,33 @@ class TwitterUserAPIView(APIView):
     # add permission to check if user is authenticated
     #permission_classes = [permissions.IsAuthenticated]
 
+    def get_object(self, username):
+        '''
+        Helper method to get the object with given twitter handle
+        '''
+        try:
+            return TwitterUser.objects.get(username = username)
+        except TwitterUser.DoesNotExist:
+            return None
+
     def post(self, request, *args, **kwargs):
-        bot = twitter.User('@' + request.data.get('username'))
-        data = {
-            'username': request.data.get('username'),
-            'is_bot': bot.get_bot(),
-            'sentiment': bot.calc_sentiment(),
-            'topics': "hello"
-        }
-        serializer = TwitterUserSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status = status.HTTP_200_OK)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+        twitter_instance = self.get_object(request.data.get('username'))
+        if not twitter_instance:
+            bot = twitter.User(request.data.get('username'))
+            data = {
+                'username': request.data.get('username'),
+                'is_bot': bot.get_bot(),
+                'sentiment': bot.calc_sentiment(),
+                'topics': "hello"
+            }
+            serializer = TwitterUserSerializer(data=data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status = status.HTTP_200_OK)
+            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+        else:
+            serializer = TwitterUserSerializer(twitter_instance)
+            return Response(serializer.data, status = status.HTTP_400_BAD_REQUEST)
 
 class IsBotAPIView(APIView):
     # add permission to check if user is authenticated
@@ -32,12 +46,12 @@ class IsBotAPIView(APIView):
         Helper method to get the object with given twitter handle
         '''
         try:
-            return TwitterUser.objects.get(username = username, user = user_id)
+            return TwitterUser.objects.get(username = username)
         except TwitterUser.DoesNotExist:
             return None
 
     def get(self, request, username, *args, **kwargs):
-        twitter_instance = self.get_object(username, request.user.id)
+        twitter_instance = self.get_object(username)
         if not twitter_instance:
             return Response(
                 {"res": "Object with twitter id does not exists"},
@@ -45,5 +59,5 @@ class IsBotAPIView(APIView):
             )
 
         serializer = TwitterUserSerializer(twitter_instance)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data['is_bot'], status=status.HTTP_200_OK)
     
