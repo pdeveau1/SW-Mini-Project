@@ -1,5 +1,5 @@
 # [START django_app]
-runtime: python37
+runtime: python310
 handlers:
 # This configures Google App Engine to serve the files in the app's
 # static directory.
@@ -12,3 +12,6 @@ handlers:
 - url: /.*
   script: auto
 # [END django_app]
+
+env_variables:
+    APPENGINE_URL: https://senior-design-362602.de.r.appspot.com/
