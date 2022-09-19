@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-3dr_ad)leua6c&@-%*u+7a*m*r7zgo1^nxwbb2xesa@2wr+ble
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.0.0.186','127.0.0.1','localhost']
 
 
 # Application definition
@@ -77,10 +77,22 @@ WSGI_APPLICATION = 'twitter_project.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'twitter_database',
+        'USER': 'admin',
+        'PASSWORD': 'password123',
+        'HOST': '34.148.6.132',
+        'PORT': '5432',
+    }
+}
+"""
+DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+"""
 
 
 # Password validation

@@ -23,4 +23,27 @@ class TwitterUserAPIView(APIView):
             return Response(serializer.data, status = status.HTTP_200_OK)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
+class IsBotAPIView(APIView):
+    # add permission to check if user is authenticated
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self, username):
+        '''
+        Helper method to get the object with given twitter handle
+        '''
+        try:
+            return TwitterUser.objects.get(username = username, user = user_id)
+        except TwitterUser.DoesNotExist:
+            return None
+
+    def get(self, request, username, *args, **kwargs):
+        twitter_instance = self.get_object(username, request.user.id)
+        if not twitter_instance:
+            return Response(
+                {"res": "Object with twitter id does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer = TwitterUserSerializer(twitter_instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
