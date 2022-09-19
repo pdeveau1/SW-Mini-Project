@@ -7,10 +7,10 @@ from .serializers import TwitterUserSerializer
 import twitter.user as twitter
 class TwitterUserAPIView(APIView):
     # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        bot = twitter.User(request.data.get('username'))
+        bot = twitter.User('@' + request.data.get('username'))
         data = {
             'username': request.data.get('username'),
             'is_bot': bot.get_bot(),
@@ -25,7 +25,7 @@ class TwitterUserAPIView(APIView):
 
 class IsBotAPIView(APIView):
     # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self, username):
         '''
