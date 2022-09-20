@@ -227,16 +227,15 @@ class User:
         print(u"Language of the text: {}".format(response.language))
 
 
-    """
     def sample_classify_text(self):
         if(self.timeline is None):
             self.get_timeline()
-    """
+        """
         #Classifying Content in a String
 
         #Args:
         #text_content The text content to analyze. Must include at least 20 words.
-    """
+        """
 
         topics = []
 
@@ -252,21 +251,16 @@ class User:
         # https://cloud.google.com/natural-language/docs/languages
         language = "en"
         for item in self.timeline['data']:
-            print(item['text'])
-            document = {"content": item['text'], "type_": type_, "language": language}
-
-            response = client.classify_text(request = {'document': document})
-            # Loop through classified categories returned from the API
-            for category in response.categories:
-                topics.append(category.name)
-                # Get the name of the category representing the document.
-                # See the predefined taxonomy of categories:
-                # https://cloud.google.com/natural-language/docs/categories
-                print(u"Category name: {}".format(category.name))
-                # Get the confidence. Number representing how certain the classifier
-                # is that this category represents the provided text.
-                print(u"Confidence: {}".format(category.confidence))
-
+            tweet = item['text']
+            #check that tweet has more then 20 tokens because that is how many classify text needs
+            if(len(tweet.split()) > 20):
+                document = {"content": tweet, "type_": type_, "language": language}
+                response = client.classify_text(request = {'document': document})
+                if(response):
+                    # Loop through classified categories returned from the API
+                    for category in response.categories:
+                        if category.name not in topics:
+                            topics.append(category.name)
         self.topics = topics
         return self.topics
-    """
+
