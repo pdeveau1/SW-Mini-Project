@@ -27,7 +27,7 @@ class TwitterAPIView(APIView):
                 'username': request.data.get('username'),
                 'is_bot': bot.get_bot(),
                 'sentiment': bot.calc_sentiment(),
-                'topics': "hello"
+                'topics': bot.calc_topics()
             }
             serializer = TwitterUserSerializer(data=data)
             if serializer.is_valid():
@@ -109,4 +109,28 @@ class SentimentAPIView(APIView):
 
         serializer = TwitterUserSerializer(twitter_instance)
         return Response(serializer.data['sentiment'], status=status.HTTP_200_OK)
+
+class TopicsAPIView(APIView):
+    # add permission to check if user is authenticated
+    #permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self, username):
+        '''
+        Helper method to get the object with given twitter handle
+        '''
+        try:
+            return TwitterUser.objects.get(username = username)
+        except TwitterUser.DoesNotExist:
+            return None
+
+    def get(self, request, username, *args, **kwargs):
+        twitter_instance = self.get_object(username)
+        if not twitter_instance:
+            return Response(
+                {"res": "Object with Twitter username does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer = TwitterUserSerializer(twitter_instance)
+        return Response(serializer.data['topics'], status=status.HTTP_200_OK)
     

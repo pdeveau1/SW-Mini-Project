@@ -227,7 +227,7 @@ class User:
         print(u"Language of the text: {}".format(response.language))
 
 
-    def calc_categories(self):
+    def calc_topics(self):
         if(self.timeline is None):
             self.get_timeline()
         """
