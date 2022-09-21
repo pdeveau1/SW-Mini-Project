@@ -1,6 +1,7 @@
 from django.urls import re_path as url
 from django.urls import path, include
 from .views import (
+    CreateUserView,
     TwitterAPIView,
     TwitterUserAPIView,
     IsBotAPIView,
@@ -9,6 +10,7 @@ from .views import (
 )
 
 urlpatterns = [
+    path('register/',CreateUserView.as_view()),
     path('user/',TwitterAPIView.as_view()),
     path('user/<str:username>',TwitterUserAPIView.as_view()),
     path('isbot/<str:username>',IsBotAPIView.as_view()),
