@@ -38,6 +38,29 @@ class TwitterAPIView(APIView):
             serializer = TwitterUserSerializer(twitter_instance)
             return Response(serializer.data, status = status.HTTP_400_BAD_REQUEST)
 
+    def put(self, request, *args, **kwargs):
+        '''
+        Updates the todo item with given todo_id if exists
+        '''
+        twitter_instance = self.get_object(request.data.get('username'))
+        if not twitter_instance:
+            return Response(
+                {"res": "Object with that twitter username does not exists"}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        bot = twitter.User(request.data.get('username'))
+        data = {
+            'username': request.data.get('username'),
+            'is_bot': bot.get_bot(),
+            'sentiment': bot.calc_sentiment(),
+            'topics': bot.calc_topics()
+        }
+        serializer = TwitterUserSerializer(instance = twitter_instance, data=data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class TwitterUserAPIView(APIView):
     # add permission to check if user is authenticated
     #permission_classes = [permissions.IsAuthenticated]
