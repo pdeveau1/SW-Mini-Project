@@ -11,28 +11,27 @@ import twitter.user as twitter
 from .serializers import UserSerializer
 
 class CreateUserView(CreateAPIView):
-
     model = get_user_model()
     permission_classes = [
         permissions.AllowAny # Or anon users can't register
     ]
     serializer_class = UserSerializer
-    
+
 class TwitterAPIView(APIView):
     # add permission to check if user is authenticated
     #permission_classes = [permissions.IsAuthenticated]
 
-    def get_object(self, username):
+    def get_object(self, username, user):
         '''
         Helper method to get the object with given twitter handle
         '''
         try:
-            return TwitterUser.objects.get(username = username)
+            return TwitterUser.objects.get(username = username, user = user)
         except TwitterUser.DoesNotExist:
             return None
 
     def post(self, request, *args, **kwargs):
-        twitter_instance = self.get_object(request.data.get('username'))
+        twitter_instance = self.get_object(request.data.get('username'), request.user.id)
         if not twitter_instance:
             bot = twitter.User(request.data.get('username'))
             data = {
@@ -54,7 +53,7 @@ class TwitterAPIView(APIView):
         '''
         Updates the todo item with given todo_id if exists
         '''
-        twitter_instance = self.get_object(request.data.get('username'))
+        twitter_instance = self.get_object(request.data.get('username'), request.user.id)
         if not twitter_instance:
             return Response(
                 {"res": "Object with that twitter username does not exists"}, 
@@ -77,17 +76,17 @@ class TwitterUserAPIView(APIView):
     # add permission to check if user is authenticated
     #permission_classes = [permissions.IsAuthenticated]
 
-    def get_object(self, username):
+    def get_object(self, username, user):
         '''
         Helper method to get the object with given twitter handle
         '''
         try:
-            return TwitterUser.objects.get(username = username)
+            return TwitterUser.objects.get(username = username,user = user)
         except TwitterUser.DoesNotExist:
             return None
 
     def get(self, request, username, *args, **kwargs):
-        twitter_instance = self.get_object(username)
+        twitter_instance = self.get_object(username, request.user.id)
         if not twitter_instance:
             return Response(
                 {"res": "Object with Twitter username does not exists"},
@@ -101,17 +100,17 @@ class IsBotAPIView(APIView):
     # add permission to check if user is authenticated
     #permission_classes = [permissions.IsAuthenticated]
 
-    def get_object(self, username):
+    def get_object(self, username, user):
         '''
         Helper method to get the object with given twitter handle
         '''
         try:
-            return TwitterUser.objects.get(username = username)
+            return TwitterUser.objects.get(username = username, user = user)
         except TwitterUser.DoesNotExist:
             return None
 
     def get(self, request, username, *args, **kwargs):
-        twitter_instance = self.get_object(username)
+        twitter_instance = self.get_object(username, request.user.id)
         if not twitter_instance:
             return Response(
                 {"res": "Object with Twitter username does not exists"},
@@ -125,17 +124,17 @@ class SentimentAPIView(APIView):
     # add permission to check if user is authenticated
     #permission_classes = [permissions.IsAuthenticated]
 
-    def get_object(self, username):
+    def get_object(self, username, user):
         '''
         Helper method to get the object with given twitter handle
         '''
         try:
-            return TwitterUser.objects.get(username = username)
+            return TwitterUser.objects.get(username = username, user = user)
         except TwitterUser.DoesNotExist:
             return None
 
     def get(self, request, username, *args, **kwargs):
-        twitter_instance = self.get_object(username)
+        twitter_instance = self.get_object(username, request.user.id)
         if not twitter_instance:
             return Response(
                 {"res": "Object with Twitter username does not exists"},
@@ -149,17 +148,17 @@ class TopicsAPIView(APIView):
     # add permission to check if user is authenticated
     #permission_classes = [permissions.IsAuthenticated]
 
-    def get_object(self, username):
+    def get_object(self, username, user):
         '''
         Helper method to get the object with given twitter handle
         '''
         try:
-            return TwitterUser.objects.get(username = username)
+            return TwitterUser.objects.get(username = username, user = user)
         except TwitterUser.DoesNotExist:
             return None
 
     def get(self, request, username, *args, **kwargs):
-        twitter_instance = self.get_object(username)
+        twitter_instance = self.get_object(username, request.user.id)
         if not twitter_instance:
             return Response(
                 {"res": "Object with Twitter username does not exists"},
