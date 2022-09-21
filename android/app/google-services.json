@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "458469369901",
+    "project_id": "shun-mini",
+    "storage_bucket": "shun-mini.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458469369901:android:995087fb47f6e5aeacb0a4",
+        "android_client_info": {
+          "package_name": "com.example.flutter_mini"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458469369901-ufctvml51fo4jt82sk8rhqlt7nj549iv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_-NnaDqk52e_cPxxSnk6FVYEGE1szk24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458469369901-ufctvml51fo4jt82sk8rhqlt7nj549iv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
