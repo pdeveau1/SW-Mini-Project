@@ -7,6 +7,6 @@ print(bot.get_bot())
 print(bot.calc_sentiment())
 
 """
-bot = user.User('@clayadavis')
-#bot.sample_analyze_entities()
-print(bot.calc_categories())
+bot = user.User('@wcvb')
+bot.sample_analyze_entities()
+print(bot.calc_topics())

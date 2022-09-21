@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'twitter_database',
         'USER': 'admin',
         'PASSWORD': 'password123',
-        'HOST': '34.148.6.132',
+        'HOST': '35.185.104.59',
         'PORT': '5432',
     }
 }

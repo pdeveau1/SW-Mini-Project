@@ -187,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
     print("start");
     // var name = Text(myText.text).data;
     var id = "";
-    var url = 'http://127.0.0.1:5000/$name';
+    var url = 'http://127.0.0.1:8000/twitter/isbot/$name';
     var headers = {
       "Access-Control_Allow_Origin": "*",
     };
@@ -220,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
     print("start");
     // var name = Text(myText.text).data;
     var id = "";
-    var url = 'http://127.0.0.1:5000/$name';
+    var url = 'http://127.0.0.1:8000/twitter/topics/$name';
     var headers = {
       "Access-Control_Allow_Origin": "*",
     };
@@ -253,7 +253,7 @@ class _MyHomePageState extends State<MyHomePage> {
     print("start");
     // var name = Text(myText.text).data;
     var id = "";
-    var url = 'http://127.0.0.1:5000/$name';
+    var url = 'http://127.0.0.1:8000/twitter/sentiment/$name';
     var headers = {
       "Access-Control_Allow_Origin": "*",
     };

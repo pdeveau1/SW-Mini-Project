@@ -252,10 +252,12 @@ class User:
         language = "en"
         for item in self.timeline['data']:
             tweet = item['text']
+            print(len(tweet.split()))
             #check that tweet has more then 20 tokens because that is how many classify text needs
             if(len(tweet.split()) > 20):
                 document = {"content": tweet, "type_": type_, "language": language}
                 response = client.classify_text(request = {'document': document})
+                print(response)
                 if(response):
                     # Loop through classified categories returned from the API
                     for category in response.categories:

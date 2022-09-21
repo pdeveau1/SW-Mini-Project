@@ -19,7 +19,7 @@ class CreateUserView(CreateAPIView):
 
 class TwitterAPIView(APIView):
     # add permission to check if user is authenticated
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self, username, user):
         '''
@@ -75,7 +75,7 @@ class TwitterAPIView(APIView):
 
 class TwitterUserAPIView(APIView):
     # add permission to check if user is authenticated
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self, username, user):
         '''
@@ -99,7 +99,7 @@ class TwitterUserAPIView(APIView):
 
 class IsBotAPIView(APIView):
     # add permission to check if user is authenticated
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self, username, user):
         '''
@@ -123,7 +123,7 @@ class IsBotAPIView(APIView):
 
 class SentimentAPIView(APIView):
     # add permission to check if user is authenticated
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self, username, user):
         '''
@@ -147,7 +147,7 @@ class SentimentAPIView(APIView):
 
 class TopicsAPIView(APIView):
     # add permission to check if user is authenticated
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self, username, user):
         '''
