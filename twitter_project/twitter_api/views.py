@@ -38,7 +38,8 @@ class TwitterAPIView(APIView):
                 'username': request.data.get('username'),
                 'is_bot': bot.get_bot(),
                 'sentiment': bot.calc_sentiment(),
-                'topics': bot.calc_topics()
+                'topics': bot.calc_topics(),
+                'user': request.user.id
             }
             serializer = TwitterUserSerializer(data=data)
             if serializer.is_valid():
