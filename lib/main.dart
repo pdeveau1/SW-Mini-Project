@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _find(String name) async {
     // setState(() async {
-    print("start");
+    print("followers");
     // var name = Text(myText.text).data;
     var id = "";
     var url = 'https://api.twitter.com/2/users/by/username/$name';
@@ -184,7 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _check_bot(String name, int index) async {
     // setState(() async {
-    print("start");
+    print("check bot");
     // var name = Text(myText.text).data;
     var id = "";
     var url = 'http://127.0.0.1:8000/twitter/isbot/$name';
@@ -217,7 +217,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _check_topic(String name, int index) async {
     // setState(() async {
-    print("start");
+    print("check topic");
     // var name = Text(myText.text).data;
     var id = "";
     var url = 'http://127.0.0.1:8000/twitter/topics/$name';
@@ -250,7 +250,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _check_mood(String name, int index) async {
     // setState(() async {
-    print("start");
+    print("check mood");
     // var name = Text(myText.text).data;
     var id = "";
     var url = 'http://127.0.0.1:8000/twitter/sentiment/$name';
