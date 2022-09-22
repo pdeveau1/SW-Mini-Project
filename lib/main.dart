@@ -12,6 +12,7 @@ import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:dio/dio.dart';
 // import 'package:flutter_twitter_login/flutter_twitter_login.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -187,16 +188,20 @@ class _MyHomePageState extends State<MyHomePage> {
     print("check bot");
     // var name = Text(myText.text).data;
     var id = "";
-    var url = 'http://127.0.0.1:8000/twitter/isbot/$name';
+    var url = 'http://127.0.0.1:8000/twitter/user/$name';
     var headers = {
       "Access-Control_Allow_Origin": "*",
     };
+    var body = {"username":name};
+
     var request = http.Request('GET', Uri.parse(url));
 
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
+    print(response.stream);
+    
     if (response.statusCode == 200) {
       // String follower = await response.stream.bytesToString();
       // print(await response.stream.bytesToString());
@@ -205,12 +210,23 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       print(response.reasonPhrase);
     }
+    final data = json.decode((result));
 
     setState(() {
       if (index >= 0) {
-        Bots_r[index] = result;
+        if(data['is_bot']) {
+          Bots_r[index] = 'Is a bot';
+        }
+        else{
+          Bots_r[index] = 'Is not a bot';
+        }
       } else {
-        _Bot = result;
+        if(data['is_bot']) {
+          _Bot = 'Is not a bot';
+        }
+        else {
+          _Bot = 'Is not a bot';
+        }
       }
     });
   }
@@ -220,16 +236,20 @@ class _MyHomePageState extends State<MyHomePage> {
     print("check topic");
     // var name = Text(myText.text).data;
     var id = "";
-    var url = 'http://127.0.0.1:8000/twitter/topics/$name';
+    var url = 'http://127.0.0.1:8000/twitter/user/$name';
     var headers = {
       "Access-Control_Allow_Origin": "*",
     };
+    var body = {"username":name};
+
     var request = http.Request('GET', Uri.parse(url));
 
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
+    print(response.stream);
+    
     if (response.statusCode == 200) {
       // String follower = await response.stream.bytesToString();
       // print(await response.stream.bytesToString());
@@ -238,12 +258,13 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       print(response.reasonPhrase);
     }
+    final data = json.decode((result));
 
     setState(() {
       if (index >= 0) {
-        Topics_r[index] = result;
+        Topics_r[index] = data['topics'].join(',');
       } else {
-        _Topic = result;
+        _Topic = data['topics'].join(',');
       }
     });
   }
@@ -253,16 +274,20 @@ class _MyHomePageState extends State<MyHomePage> {
     print("check mood");
     // var name = Text(myText.text).data;
     var id = "";
-    var url = 'http://127.0.0.1:8000/twitter/sentiment/$name';
+    var url = 'http://127.0.0.1:8000/twitter/user/$name';
     var headers = {
       "Access-Control_Allow_Origin": "*",
     };
+    var body = {"username":name};
+
     var request = http.Request('GET', Uri.parse(url));
 
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
+    print(response.stream);
+    
     if (response.statusCode == 200) {
       // String follower = await response.stream.bytesToString();
       // print(await response.stream.bytesToString());
@@ -271,12 +296,22 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       print(response.reasonPhrase);
     }
+    final data = json.decode((result));
+    /*
+    Response response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+      body: json.encode(body)
+    );
 
+    String responseBody = response.body;
+    print(responseBody);
+    */
     setState(() {
       if (index >= 0) {
-        Moods_r[index] = result;
+        Moods_r[index] = data['sentiment'];
       } else {
-        _Mood = result;
+        _Mood = data['sentiment'];
       }
     });
   }
