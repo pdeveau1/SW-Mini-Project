@@ -12,7 +12,6 @@ import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:dio/dio.dart';
 // import 'package:flutter_twitter_login/flutter_twitter_login.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
