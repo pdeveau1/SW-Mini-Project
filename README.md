@@ -26,3 +26,11 @@ To add a user to the database use the endpoint 'twitter/user/'. Use a POST with 
 This will return the username, if it is a bot or not, the sentiment, and the topics.
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/67556230/192120854-3927afc7-4e80-4fb9-b1a0-27b68c5ddf7b.png">
 If you would like to update the information of the twitter user you can use the same enpoint, but perform a PUT instead of a POST with the username in JSON format.
+
+To get the information about a specific twitter user that have already addded to the database use the endpoint 'twitter/user/<username>' and perform a GET.
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/67556230/192120990-6d71987e-1846-4d85-82bb-f4e483675a05.png">
+
+ To get the specific details of the twitter user perform a GET with the endpoints 'twitter/isbot/<username>','twitter/sentiment/<username>',or 'twitter/topics/<username>'.
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/67556230/192121020-69a26c7c-46fe-4960-af42-df656343021b.png">
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/67556230/192121031-6551e09c-959f-47d3-bcc6-269a84276052.png">
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/67556230/192121037-d6c641e3-cf38-4442-a4d2-91ca69d8d71d.png">
