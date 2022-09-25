@@ -38,3 +38,10 @@ To get the information about a specific twitter user that have already addded to
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/67556230/192121020-69a26c7c-46fe-4960-af42-df656343021b.png">
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/67556230/192121031-6551e09c-959f-47d3-bcc6-269a84276052.png">
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/67556230/192121037-d6c641e3-cf38-4442-a4d2-91ca69d8d71d.png">
+
+* Front end:
+--------------
+
+1. Front end app: We originally want to do a IOS app so we choose the Xcode as our SDK. This SDK is easy on UI design since it has graphical edditing but very inconvinient in calling and using outside resources, like APIs. So we choose to use Flutter as our SDK. This one is relatively harder on UI design but easier on code development. 
+
+2. Login section: 
