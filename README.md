@@ -44,4 +44,5 @@ To get the information about a specific twitter user that have already addded to
 
 1. Front end app: We originally want to do a IOS app so we choose the Xcode as our SDK. This SDK is easy on UI design since it has graphical edditing but very inconvinient in calling and using outside resources, like APIs. So we choose to use Flutter as our SDK. This one is relatively harder on UI design but easier on code development. 
 
-2. Login section: 
+2. Login section: We tried to use the twitter login which twitter provided for flutter, however we find out that the one they provide only capable for IOS and Android platform and since we are doing a web application, we then switch to a [google login](https://pub.dev/packages/google_sign_in_web), the login module looks like this:
+ 
