@@ -45,4 +45,11 @@ To get the information about a specific twitter user that have already addded to
 1. Front end app: We originally want to do a IOS app so we choose the Xcode as our SDK. This SDK is easy on UI design since it has graphical edditing but very inconvinient in calling and using outside resources, like APIs. So we choose to use Flutter as our SDK. This one is relatively harder on UI design but easier on code development. 
 
 2. Login section: We tried to use the twitter login which twitter provided for flutter, however we find out that the one they provide only capable for IOS and Android platform and since we are doing a web application, we then switch to a [google login](https://pub.dev/packages/google_sign_in_web), the login module looks like this:
+
+<img width="1440" alt="image" src="https://github.com/pdeveau1/SW-Mini-Project/blob/main/Google_login.png">
+
+3. List followers: We use a lot of Twitter APIs in our project as discussed in previous sections. We also use some directly in front end with API calls from [Postman](https://restless-satellite-11181.postman.co/workspace/My-Workspace~ac80e874-9a82-49bb-8b33-cbb2291d6465/request/23335950-950d4e68-6b0f-46ec-9e6a-3dfcbb9f74cd?ctx=code), We find a username's id and then use the id to find his/her follows. Of course, this need a [elevated access of twitter developer portal](https://developer.twitter.com/en/portal/projects/1568384337850023941/apps/25404206/settings). 
+
+4. Upload on Github: We had faced some problems on uploading the flutter app onto Github since the file is too large, that's why Shun doesn't have a lot of commits on this repository early in the development when he was doing UI and front end stuffs locally. However he did keep all files backups on google drive and update with his teammates. We finally figure it up with 
+
  
