@@ -11,6 +11,20 @@
 ### UI Live Demo ###
 https://user-images.githubusercontent.com/67556230/192120453-1316ac2e-bf8b-4e5c-9340-62026983d3ca.mov
 
+### UI explaination ###
+<img width="1440" alt="image" src="https://github.com/pdeveau1/SW-Mini-Project/blob/main/UI_design.png">
+
+Section explain: 
+1. You can enter you usename or the username you want to search here as input parameters and use the functions related to this input. 
+
+2. This is a function where it will list all the follows of the one you want to search and list them in section 4
+
+3. These are functions that provide Bot check, topic find and see mood functions for the user you want to search and will show them in the corresbonding area with test messages showing now 
+
+4. This section shows all the follows and can also do individual searching for every user and keep them in textfield near those buttons. 
+
+5. This is a module that provide the user with google login with google API used. 
+
 ### Twitter API ###
 #### Login ####
 To login use the endpoint '/api-auth/login/'.
