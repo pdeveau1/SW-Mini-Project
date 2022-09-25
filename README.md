@@ -1,4 +1,5 @@
-# SW-Mini-Project #
+# SW-Mini-Project # 
+by Paige, Shun
 
 ## Work distribution: ##
 
